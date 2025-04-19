@@ -1,15 +1,20 @@
 
-import { Redirect, Stack } from 'expo-router';
+import { Redirect, router, Stack } from 'expo-router';
+import { useContext } from 'react';
+import {AuthContext} from "../../utils/authContext"
+
+
 import 'react-native-reanimated';
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 
 export default function ProtectedLayout() {
-  const isLogged = true;
-  if(!isLogged){
-    return <Redirect href="/login" />;
+  const authState = useContext(AuthContext)
+  if (!authState.isLoggedin){
+    return <Redirect href="/login"/>
   }
+  
   
   return (
       <Stack>
