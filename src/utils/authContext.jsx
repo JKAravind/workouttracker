@@ -1,7 +1,7 @@
 const { createContext, Children, useState } = require("react");
 
 export const AuthContext = createContext({
-    isLoggedin : false,
+    isLoggedIn : false,
     logIn : ()=>{},
     logOut :()=>{}
 })

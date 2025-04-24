@@ -11,7 +11,8 @@ import 'react-native-reanimated';
 
 export default function ProtectedLayout() {
   const authState = useContext(AuthContext)
-  if (!authState.isLoggedin){
+  console.log(authState.isLoggedIn)
+  if (!authState.isLoggedIn){
     return <Redirect href="/login"/>
   }
   
