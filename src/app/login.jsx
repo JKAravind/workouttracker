@@ -16,8 +16,13 @@ export default function Login() {
             router.replace("/")}
             }>
                                 <Text>Login Page</Text>
+            </TouchableOpacity>
 
-                </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{
+                router.replace("/register")
+            }}>
+                <Text>Register</Text>
+            </TouchableOpacity>
         </View>
     );
 }
