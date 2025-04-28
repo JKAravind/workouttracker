@@ -1,14 +1,51 @@
 import { router } from "expo-router";
 import { useState } from "react";
-import { View ,Text, TextInput,Button} from "react-native";
+import { View ,Text, TextInput,Button, Alert} from "react-native";
+import axios from "axios";
 
 
 
 export default function Register (){
 
-    const [email,setEmail] = useState("")
+    const [mail,setEmail] = useState("")
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const regex = /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-z]{2,}$/
+
+
+    const handleRegister = async () =>{
+        
+        try{
+
+            if (!(regex.test(mail))){
+                Alert.alert("Invalid Email","Pleas enter a valid email ID")
+                return
+            }
+
+            if ((mail.trim()==="") || (username.trim()==="")|| (password.trim()=="")){
+                Alert.alert("Invalid Box","Pleas Fill all the box")
+                return;
+            }
+
+
+
+
+
+
+            const Response = await axios.post("http://192.168.0.151:3000/register",{
+                
+                mail,
+                username,
+                password
+            })
+            console.log(Response)
+            Alert.alert("Successfull Registered","You will be redirect To login Screen")
+            router.replace("/login")
+        }
+        catch(err){
+            console.error(err)
+        }
+    }
 
 
     return(
@@ -17,11 +54,11 @@ export default function Register (){
 
             <Text>Email</Text>
             <TextInput
-            value={email}
+            value={mail}
             onChangeText={(newMail)=>{
                 setEmail(newMail);
-                console.log(email)
             }}
+            placeholder="enter your mail"
             />
 
             <Text>Username</Text>
@@ -37,8 +74,8 @@ export default function Register (){
             />
 
             <Button
-            onPress={()=>router.replace("/login")}
-            title="Learn More"
+            onPress={handleRegister}
+            title="Submit"
             
             />
 
