@@ -32,7 +32,7 @@ export default function Register (){
 
 
 
-            const Response = await axios.post("http://192.168.0.151:3000/register",{
+            const Response = await axios.post("http://192.168.0.151:3000/auth/register",{
                 
                 mail,
                 username,
