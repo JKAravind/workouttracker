@@ -10,7 +10,7 @@ export default function RootLayout(){
 
             
         <Stack>
-            <Stack.Screen name="(protected)" />
+            <Stack.Screen name="(protected)" options={{headerShown:false}} />
         </Stack>
 
         </AuthContextProvider>

@@ -4,6 +4,8 @@ import { View , Text, TextInput, Button } from 'react-native';
 import { AuthContext } from '../utils/authContext';
 import { TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Login() {
     const router = useRouter();
@@ -19,7 +21,7 @@ export default function Login() {
                 mail,
                 password
             })
-            console.log("redirecting to home")
+            console.log(Login)
             AuthState.logIn();
             router.replace("/")
         }
@@ -33,10 +35,12 @@ export default function Login() {
     }
 
     return (
-        <View className="flex-1 items-center justify-center bg-blue-500">
+        <View className="flex-1 items-center justify-center bg-blue-500 ">
 
-            <Text>E-mail</Text>
+            <Text>UserLogin</Text>
+
             <TextInput
+            className="bg-white mt-4 rounded-2xl w-[200]"
             value={mail}
             onChangeText={(newMail)=>{
                 setMail(newMail);
@@ -45,8 +49,8 @@ export default function Login() {
             
             />
 
-            <Text>Password</Text>
             <TextInput
+            className="bg-white mt-4 rounded-2xl w-[200]"
             value={password}
             onChangeText={(newPassword)=>{
                 setPassword(newPassword)
@@ -54,8 +58,19 @@ export default function Login() {
             placeholder='Enter your Password'
             />
 
-            <Button onPress={handleLogin}
+            <Button
+            className= " mt-11 rounded-2xl w-[200]"
+            onPress={handleLogin}
             title='Login'
+            />
+
+            <Button
+            className= " mt-11 rounded-2xl w-[200]"
+            onPress={()=>{
+                AuthState.logIn()
+                router.replace("/")
+            }}
+            title='RempLogin'
             />
             
             

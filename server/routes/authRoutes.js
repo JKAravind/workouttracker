@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router()
 const User = require("../models/userModels")
+const generateToken = require("../config/jsonWT")
+
 
 router.post("/register",async(req,res)=>{
     const{mail,username,password} = req.body
@@ -26,7 +28,8 @@ router.post("/login",async(req,res)=>{
     try{
         const user = await User.findOne({mail})
         if (user.password === password){
-            res.status(201).json({message:"Logged In"})
+            const token = generateToken(user._id); 
+            res.status(201).json({message:"Logged In",token})
             console.log("success")
             return;
         }
