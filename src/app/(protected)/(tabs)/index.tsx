@@ -1,5 +1,6 @@
+import { router } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function Home() {
     return (
@@ -10,6 +11,9 @@ export default function Home() {
 
             <View style={styles.Boxcontainer}>
                 <Text>Container 2</Text>
+                <TouchableOpacity style={styles.button} onPress={()=>{router.push("startWorkout/")}}>
+                    <Text>Start Workout</Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.Boxcontainer}>
@@ -45,5 +49,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
     },
+    button:{
+        backgroundColor:"grey",
+        padding:20,
+    }
 });
 

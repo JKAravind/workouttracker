@@ -22,6 +22,8 @@ export default function Login() {
                 password
             })
             console.log(Login)
+            const token = Login.data.token;
+            await AsyncStorage.setItem("token",token)
             AuthState.logIn();
             router.replace("/")
         }
