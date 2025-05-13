@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInputComponent, TextInput, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInputComponent, TextInput, FlatList, Touchable, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import useExerciseStore from '../../../stores/selectedExercises';
 
 const AddWorkout = () => {
+
+    const selectedExercises = useExerciseStore((state)=>{return state.selectedExercises})
+    const addExercise = useExerciseStore((state)=>{return state.addExercise})
+
     const [searchQuery , setSearchQuery] = useState("")
     const [exerciseList , setExerciseList] = useState([]);
     const handleChange = (currentSearchQuery)=>{
@@ -14,17 +19,25 @@ const AddWorkout = () => {
 
         const debounceTimer = setTimeout(() => {
             apiCall(searchQuery)
-        }, 1000);
+        }, 200);
         return () => {
             clearTimeout(debounceTimer)
         }
     }, [searchQuery])
 
+    const handleAddExercise = (item)=>{
+        addExercise(item.name)
+        console.log(selectedExercises)
+
+    }
+
     const renderItem = ({item})=>{
         return(
-            <View>
-                <Text>{item.name}</Text>
-            </View>
+
+                <TouchableOpacity style={styles.exerciseContainer} onPress={()=>handleAddExercise(item)}>
+                                <Text>{item.name}</Text>
+                </TouchableOpacity>
+            
         );
 
     }
@@ -50,18 +63,24 @@ const AddWorkout = () => {
     
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Add Workout Screen</Text>
-            <TextInput
-            placeholder='Search'
-            value={searchQuery}
-            onChangeText={(currentSearchQuery)=>{handleChange(currentSearchQuery)}}
-            autoCorrect={false}
-            style={styles.search}>
+            <View style={styles.header}>
+
+                <Text style={styles.text}>Add Workout Screen</Text>
+                <TextInput
+                placeholder='Search'
+                value={searchQuery}
+                onChangeText={(currentSearchQuery)=>{handleChange(currentSearchQuery)}}
+                autoCorrect={false}
+                style={styles.search}>
+                </TextInput>
+
+            </View>
             
-            </TextInput>
             <FlatList
             data={exerciseList}
             renderItem={renderItem}
+            contentContainerStyle={{  width:"100%",alignItems:"center" }}
+
 
             
             ></FlatList>
@@ -72,10 +91,24 @@ const AddWorkout = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#fff',
     },
+    header:{
+        alignItems:"center",
+        margin:10
+    },
+    exerciseContainer:{
+        height:50,
+        width:400,
+        borderWidth:2,
+        borderRadius:10,
+        margin:10,
+        backgroundColor:"white",
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    
+
     text: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -84,7 +117,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         margin:2,
         height:30,
-        width:"60%",
+        width:"70%",
         borderRadius:10,
         padding:20
     }
