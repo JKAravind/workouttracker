@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInputComponent, TextInput, FlatList, Touchable, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity , Button } from 'react-native';
 import axios from 'axios';
 import useExerciseStore from '../../../stores/selectedExercises';
+import { router } from 'expo-router';
 
 const AddWorkout = () => {
 
@@ -14,6 +15,7 @@ const AddWorkout = () => {
         setSearchQuery(currentSearchQuery)        
     }
 
+
     useEffect(() => {
         if(!searchQuery.trim()==="") return;
 
@@ -25,8 +27,9 @@ const AddWorkout = () => {
         }
     }, [searchQuery])
 
+
     const handleAddExercise = (item)=>{
-        addExercise(item.name)
+        addExercise(item)
         console.log(selectedExercises)
 
     }
@@ -80,10 +83,13 @@ const AddWorkout = () => {
             data={exerciseList}
             renderItem={renderItem}
             contentContainerStyle={{  width:"100%",alignItems:"center" }}
-
-
-            
             ></FlatList>
+
+            <Button onPress={()=>{router.back()}}>
+
+                Finish
+
+            </Button>
         </View>
     );
 };

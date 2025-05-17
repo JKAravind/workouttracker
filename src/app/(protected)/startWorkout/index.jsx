@@ -1,9 +1,34 @@
 import { router } from 'expo-router';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import useExerciseStore from '../../../stores/selectedExercises';
 
 const StartWorkout = () => {
+
+    const selectedExercises = useExerciseStore((state)=>{return state.selectedExercises})
+
+    const exerciseRender = ({item}) =>{
+        return(
+            <View>
+                <View style={styles.exerciseHeader}>
+
+                </View>
+
+                <View>
+                    <Text>{item.name}</Text>
+                    
+                    
+                </View>
+
+                <TouchableOpacity>
+                    Add A New Set
+                </TouchableOpacity>
+
+
+            </View>
+        );
+    }
 
 
     const addExercise = () => {
@@ -24,7 +49,13 @@ const StartWorkout = () => {
                         </Text>
                     </TouchableOpacity>
             </View>
-            <ScrollView>
+            <View style={{flex:1,backgroundColor:"blue",width:"100%"}}>
+                <FlatList
+                data={selectedExercises}
+                renderItem={exerciseRender}
+                contentContainerStyle={{flex:1,width:"100%",backgroundColor:"black"}}>
+
+                </FlatList>
 
                 <TouchableOpacity style={styles.button} onPress={addExercise}>
                         <Text>
@@ -33,7 +64,7 @@ const StartWorkout = () => {
                 </TouchableOpacity>
 
 
-            </ScrollView>
+            </View>
             
 
 
@@ -54,7 +85,6 @@ const StartWorkout = () => {
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        alignItems: 'center',
         backgroundColor: '#f5f5f5',
         padding:10
     },
@@ -72,7 +102,7 @@ const styles = StyleSheet.create({
     },
     button:{
         margin:5,
-        width:100,
+        width:200,
         backgroundColor: '#DDDDDD',
         alignItems:"center",
         alignSelf:"stretch",
